@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RepositoriesService } from './repositories.service';
 
 interface IRepository{
 	name : string,
@@ -14,19 +15,15 @@ interface IRepository{
 export class RepositoriesComponent implements OnInit {
 
 	repositories : any = [];
-	repository : IRepository;
+	repository : IRepository = { name: "", description: "" };
 
-  constructor() { }
+  constructor(private repoService : RepositoriesService) { }
 
   ngOnInit() {
-  	this.repository = { name: "Main repository", description: "Main repository" };
-
-  	this.repositories = [
-  		{ name: "Repository 1", description: "Repository 1" },
-  		{ name: "Repository 2", description: "Repository 2" },
-  		{ name: "Repository 3", description: "Repository 3" },
-  		{ name: "Repository 4", description: "Repository 4" },
-  	];
+  	this.repoService.getRepos().subscribe((data) => {
+      this.repositories = data.json();
+      this.repository = this.repositories[0];
+    })
   }
 
   setMainRepository(repository){
