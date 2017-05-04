@@ -29,4 +29,8 @@ export class RepositoriesComponent implements OnInit {
   	];
   }
 
+  setMainRepository(repository){
+  	this.repository = repository;
+  }
+
 }
